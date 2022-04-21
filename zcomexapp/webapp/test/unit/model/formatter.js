@@ -2,7 +2,7 @@
 
 sap.ui.define([
 	"sap/m/Text",
-	"comex/zcomexapp/model/formatter"
+	"sap/ui/demo/masterdetail/model/formatter"
 ], function (Text, formatter) {
 	"use strict";
 

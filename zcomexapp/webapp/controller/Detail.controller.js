@@ -37,8 +37,6 @@ sap.ui.define(
           ),
           buttons: {
             laterDebts: {
-              text: "",
-              type: "Accept",
               icon: "",
               enable: false,
             },
@@ -131,7 +129,8 @@ sap.ui.define(
       },
 
       onInvoicePost: function (oEvent) {
-        this._oMessageManager.removeAllMessages();
+        var oViewModel = this.getModel("detailView");
+        oViewModel.setProperty("/busy", true);
         var payload = oEvent.getSource().getBindingContext().getObject();
         if (payload.VendorInvoice === "") {
           payload.Action = "B";
@@ -140,13 +139,16 @@ sap.ui.define(
         }
         var oModel = this.getView().getModel();
         oModel.create("/InvoiceHeaderSet", payload, {
-          success: function (oData, oResponse) {}.bind(this),
-          error: function (oError) {}.bind(this),
+          success: function (oData, oResponse) {
+            oViewModel.setProperty("/busy", false);
+          }.bind(this),
+          error: function (oError) {
+            oViewModel.setProperty("/busy", false);
+          }.bind(this),
         });
       },
 
       onLaterDebtsPost: function (oEvent) {
-        this._oMessageManager.removeAllMessages();
         var payload = oEvent.getSource().getBindingContext().getObject();
         var oModel = this.getView().getModel();
         oModel.create("/LaterDebtHeaderSet", payload, {
@@ -158,6 +160,9 @@ sap.ui.define(
       onLaterDebtsDetailPress: function (oEvent) {
         var that = this;
         var laterDebtPath = oEvent.getSource().getBindingContext().getPath();
+        debugger;
+        var oContex = oEvent.getSource().getElementBinding();
+        var object = oContex.getBoundContext();
         var path = laterDebtPath + "/" + "GetLaterDebtItems";
 
         if (!this._oTableDetailDialog) {
@@ -186,30 +191,38 @@ sap.ui.define(
               }.bind(this),
             }),
           });
-          this.byId("LaterDebtSmartTableDetail").bindElement(laterDebtPath);
+
           this._oTableDetailDialog.addStyleClass("sapUiContentPadding");
           this.getView().addDependent(this._oTableDetailDialog);
         }
+        debugger;
+        this.byId("LaterDebtSmartTableDetail").bindContext(laterDebtPath);
         this._oTableDetailDialog.open();
       },
 
       onNfWritePost: function (oEvent) {
-        this._oMessageManager.removeAllMessages();
+        var oViewModel = this.getModel("detailView");
+        oViewModel.setProperty("/busy", true);
         var payload = oEvent.getSource().getBindingContext().getObject();
-        if (payload.NfeDocument === "") {
+        if (payload.NfeDocument === "0000000000") {
           payload.Action = "D";
         } else {
+          oViewModel.setProperty("/busy", false);
           return;
         }
         var oModel = this.getView().getModel();
         oModel.create("/InvoiceHeaderSet", payload, {
-          success: function (oData, oResponse) {}.bind(this),
-          error: function (oError) {}.bind(this),
+          success: function (oData, oResponse) {
+            oViewModel.setProperty("/busy", false);
+          }.bind(this),
+          error: function (oError) {
+            oViewModel.setProperty("/busy", false);
+          }.bind(this),
         });
       },
 
       onAccountPost: function (oEvent) {
-        this._oMessageManager.removeAllMessages();
+        debugger;
         var payload = oEvent.getSource().getBindingContext().getObject();
         if (payload.AccountDocument === "") {
           payload.Action = "E";
@@ -222,7 +235,6 @@ sap.ui.define(
           error: function (oError) {}.bind(this),
         });
       },
-
 
       /* =========================================================== */
       /* begin: internal methods                                     */

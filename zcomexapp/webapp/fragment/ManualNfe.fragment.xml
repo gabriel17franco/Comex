@@ -1,8 +1,8 @@
 <c:FragmentDefinition
-xmlns:m="sap.m"
-xmlns:c="sap.ui.core"
-xmlns:f="sap.ui.layout.form"
-xmlns="sap.uxap"
+	xmlns:m="sap.m"
+	xmlns:c="sap.ui.core"
+	xmlns:f="sap.ui.layout.form"
+	xmlns="sap.uxap"
 >
 	<ObjectPageSubSection>
 		<blocks>
@@ -27,19 +27,39 @@ xmlns="sap.uxap"
 				<f:content>
 					<m:Label
 						text="{i18n>document}"
-						visible="{=${Nfe} !== '' }"
+						visible="{=${NfeDocument} !== '0000000000' }"
 					/>
 					<m:Text
 						text="{NfeDocument}"
-						visible="{=${Nfe} !== '' }"
+						visible="{=${NfeDocument} !== '0000000000' }"
 					/>
 					<m:Label
 						text="{i18n>postingDate}"
-						visible="{=${Nfe} !== '' }"
+						visible="{=${NfeDocument} !== '0000000000' }"
 					/>
 					<m:Text
-						text="{NfePostingDate}"
-						visible="{=${Nfe} !== '' }"
+						text="{
+							path: 'NfePostingDate',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+								style: 'medium'
+							}
+						}"
+						visible="{=${NfeDocument} !== '0000000000' }"
+					/>
+					<m:Label
+						text="{i18n>createdOn}"
+						visible="{= ${NfeDocument} !== '0000000000'}"
+					/>
+					<m:Text
+						text="{
+							path: 'NfeCreatedOn',
+							type: 'sap.ui.model.type.DateTime',
+							formatOptions: {
+								style: 'medium'
+							}
+						}"
+						visible="{= ${NfeDocument} !== '0000000000'}"
 					/>
 				</f:content>
 				<m:Button
@@ -48,7 +68,7 @@ xmlns="sap.uxap"
 					text="{i18n>postingNfe}"
 					type="Accept"
 					press="onNfWritePost"
-					visible="{=${Nfe} === '' }"
+					visible="{=${NfeDocument} === '0000000000' }"
 				/>
 				<m:Button
 					width="100%"
@@ -61,5 +81,4 @@ xmlns="sap.uxap"
 			</f:SimpleForm>
 		</blocks>
 	</ObjectPageSubSection>
-
 </c:FragmentDefinition>

@@ -10,7 +10,8 @@ sap.ui.define([
 		return UIComponent.extend("comex.zcomexapp.Component", {
 
 			metadata : {
-				manifest : "json"
+				manifest : "json",
+				config : { fullWidth : true }
 			},
 
 			/**

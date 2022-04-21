@@ -65,16 +65,16 @@ xmlns="sap.uxap"
 			</f:content>
 			<m:Button
 				width="200px"
-				icon="sap-icon://accept"
-				text="Lançar Fatura"
+				icon="sap-icon://media-play"
+				text="{i18n>postInvoice}"
 				type="Accept"
 				visible="{= ${VendorInvoice} === ''}"
 				press="onInvoicePost"
 			/>
 			<m:Button
 				width="200px"
-				icon="sap-icon://decline"
-				text="Estornar"
+				icon="sap-icon://media-reverse"
+				text="{i18n>reverse}"
 				type="Reject"
 				visible="{= ${VendorInvoice} !== ''}"
 				press="onInvoicePost"

@@ -18,8 +18,8 @@ server:
           version: 1.65.0 # The UI5 version, for instance, 1.78.1. Empty string means latest version
         backend:
           - path: /sap
-            url: http://smts4dev.summitbr:8000
-            client: '100'
+            url: http://smts4qas.summitbr:8000
+            client: '400'
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:

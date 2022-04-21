@@ -1,12 +1,15 @@
-/*global QUnit*/
+/*global QUnit,sinon*/
 
 sap.ui.define([
-	"comex/zcomexapp/controller/ListSelector"
+	"sap/ui/demo/masterdetail/controller/ListSelector",
+	"sap/ui/thirdparty/sinon",
+	"sap/ui/thirdparty/sinon-qunit"
 ], function(ListSelector) {
 	"use strict";
 
 	QUnit.module("Initialization", {
 		beforeEach : function () {
+			sinon.config.useFakeTimers = false;
 			this.oListSelector = new ListSelector();
 		},
 		afterEach : function () {
@@ -33,6 +36,7 @@ sap.ui.define([
 
 	QUnit.module("List loading", {
 		beforeEach : function () {
+			sinon.config.useFakeTimers = false;
 			this.oListSelector = new ListSelector();
 		},
 		afterEach : function () {
@@ -108,6 +112,7 @@ sap.ui.define([
 
 	QUnit.module("Selecting item in the list", {
 		beforeEach : function () {
+			sinon.config.useFakeTimers = false;
 			this.oListSelector = new ListSelector();
 			this.oListSelector.oWhenListLoadingIsDone = {
 				then : function (fnAct) {

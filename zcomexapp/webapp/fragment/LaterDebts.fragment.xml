@@ -75,9 +75,18 @@
 						visible="{= ${LaterDebtDocument} !== ''}"
 					/>
 					<Button
-						text="{detailView>/buttons/laterDebts/text}"
-						type="{detailView>/buttons/laterDebts/type}"
-						icon="{detailView>/buttons/laterDebts/icon}"
+						text="{
+							path: 'LaterDebtDocument',
+							formatter: '.formatter.getLaterButtonText'
+						}"
+						type="{
+							path: 'LaterDebtDocument',
+							formatter: '.formatter.getLaterButtonType'
+						}"
+						icon="{
+							path: 'LaterDebtDocument',
+							formatter: '.formatter.getLaterButtonIcon'
+						}"
 						width="100px"
 						visible="true"
 						enabled="{detailView>/buttons/laterDebts/enabled}"

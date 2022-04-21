@@ -11,7 +11,7 @@
   ],
   "configurations": [
     {
-      "name": "Start zcomexapp",
+      "name": "Start zcomexapp QAS",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npx",
@@ -32,7 +32,7 @@
       }
     },
     {
-      "name": "Start zcomexapp - Index",
+      "name": "Start zcomexapp - Index QAS",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "npx",
@@ -53,67 +53,7 @@
       }
     },
     {
-      "name": "Start zcomexapp with UI5 Version",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "npx",
-      "cwd": "${workspaceFolder}/zcomexapp",
-      "windows": {
-        "runtimeExecutable": "npx.cmd"
-      },
-      "runtimeArgs": ["fiori", "run"],
-      "args": [
-        "--open",
-        "test/flpSandbox.html?sap-ui-xx-viewCache=false#comexzcomexapp-display",
-        "${input:UI5MinVersion1.42.00}"
-      ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "port": 9229,
-      "env": {
-        "DEBUG": "--inspect"
-      }
-    },
-    {
-      "name": "Start zcomexapp Mock",
-      "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}/zcomexapp",
-      "runtimeExecutable": "npx",
-      "windows": {
-        "runtimeExecutable": "npx.cmd"
-      },
-      "runtimeArgs": ["fiori", "run"],
-      "args": [
-        "--open",
-        "test/flpSandboxMockServer.html?sap-ui-xx-viewCache=false#comexzcomexapp-display"
-      ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "port": 9229,
-      "env": {}
-    },
-    {
-      "name": "Start zcomexapp Mock with UI5 Version",
-      "type": "node",
-      "request": "launch",
-      "cwd": "${workspaceFolder}/zcomexapp",
-      "runtimeExecutable": "npx",
-      "windows": {
-        "runtimeExecutable": "npx.cmd"
-      },
-      "runtimeArgs": ["fiori", "run"],
-      "args": [
-        "--open",
-        "test/flpSandboxMockServer.html?sap-ui-xx-viewCache=false#comexzcomexapp-display",
-        "${input:UI5MinVersion1.65.0}"
-      ],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "port": 9229
-    },
-    {
-      "name": "Start zcomexapp Local",
+      "name": "Start zcomexapp Local DEV",
       "type": "node",
       "request": "launch",
       "cwd": "${workspaceFolder}/zcomexapp",
@@ -126,7 +66,28 @@
         "--config",
         "./ui5-local.yaml",
         "--open",
-        "test/flpSandbox.html?sap-ui-xx-viewCache=false#comexzcomexapp-display"
+        "test/flpSandbox.html#comexzcomexapp-display"
+      ],
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "port": 9229,
+      "env": {}
+    },
+    {
+      "name": "Start zcomexapp Local - Index DEV",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}/zcomexapp",
+      "runtimeExecutable": "npx",
+      "windows": {
+        "runtimeExecutable": "npx.cmd"
+      },
+      "runtimeArgs": ["fiori", "run"],
+      "args": [
+        "--config",
+        "./ui5-local.yaml",
+        "--open",
+        "index.html"
       ],
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
