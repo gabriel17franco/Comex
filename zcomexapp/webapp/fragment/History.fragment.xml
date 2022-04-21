@@ -1,40 +1,35 @@
 <c:FragmentDefinition
-xmlns:m="sap.m"
+xmlns="sap.m"
 xmlns:c="sap.ui.core"
+xmlns:xap="sap.uxap"
+xmlns:smartList="sap.ui.comp.smartlist"
 xmlns:smartTable="sap.ui.comp.smarttable"
-xmlns:f="sap.ui.layout.form"
-xmlns="sap.uxap"
 >
-<ObjectPageSubSection>
-	<m:HBox>
-		<m:VBox>
-			<m:Label text="Forma de Pagamento"/>
-			<m:RadioButtonGroup
-				id="Paymsewrssent"
-				columns="4"
-				width="100%"
-				class="sapUiMediumMarginBottom"
-			>
-				<m:RadioButton
-					id="Paymendewrst-s1"
-					text="Cartão de Crédito"
-				/>
-				<m:RadioButton
-					id="Paymerewfsnt-s2"
-					text="Cartão de Débito"
-				/>
-				<m:RadioButton
-					id="paysmerwednts-3"
-					text="Pix"
-				/>
-				<m:RadioButton
-					id="paymefrewsnt-s4"
-					text="Dinheiro"
-				/>
-			</m:RadioButtonGroup>
-		</m:VBox>
-	</m:HBox>
-</ObjectPageSubSection>
+<xap:ObjectPageSubSection>
+	<HBox>
+		<smartList:SmartList entitySet="HistorySet" header="Log List"
+		showRowCount="true" showFullScreenButton="true" enableAutoBinding="true" listBindingPath="GetHistory" 
+	>
+	<smartList:listItemTemplate>
+		<StandardListItem
+			title="{Stepdescription}" 
+			icon="sap-icon://accept"
+			iconInset="true"
+			highlight="Success"
+			info="{path: 'Createdon',
+			type: 'sap.ui.model.type.Date',
+			formatOptions: {
+				style: 'short'
+			}}"
+			description="{Createdby}" 
+			infoState="None"
+
+		/>
+			
+	</smartList:listItemTemplate>
+	</smartList:SmartList>
+	</HBox>
+</xap:ObjectPageSubSection>
 
 
 </c:FragmentDefinition>

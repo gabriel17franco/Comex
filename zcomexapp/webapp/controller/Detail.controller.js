@@ -63,13 +63,13 @@ sap.ui.define(
 
         this._oMessageManager.registerMessageProcessor(oMessageProcessor);
 
-        this._oMessageManager.addMessages(
-          new sap.ui.core.message.Message({
-            message: "Something wrong happened",
-            type: MessageType.Error,
-            processor: oMessageProcessor,
-          })
-        );
+        // this._oMessageManager.addMessages(
+        //   new sap.ui.core.message.Message({
+        //     message: "Something wrong happened",
+        //     type: MessageType.Error,
+        //     processor: oMessageProcessor,
+        //   })
+        // );
       },
 
       /* =========================================================== */
@@ -103,11 +103,8 @@ sap.ui.define(
         }
       },
 
-      onClearMessages: function (oEvent) {
-        this._oMessageManager.removeAllMessages();
-      },
-
       onNfWritePost: function (oEvent) {
+        this._oMessageManager.removeAllMessages();
         var payload = oEvent.getSource().getBindingContext().getObject();
         if (payload.NfeDocument === "") {
           payload.Action = "D";
@@ -140,9 +137,15 @@ sap.ui.define(
         var oMessagesButton = oEvent.getSource();
         if (!this._messagePopover) {
           this._messagePopover = new MessagePopover({
+            headerButton: new sap.m.Button({
+              text: this.getResourceBundle().getText("deleteMessages"),
+              press: function () {
+                this._messagePopover.close();
+                this._oMessageManager.removeAllMessages();
+              }.bind(this),
+            }),
             items: {
               path: "message>/",
-              initiallyExpanded: true,
               template: new sap.m.MessageItem({
                 description: "{message>description}",
                 type: "{message>type}",
@@ -158,6 +161,7 @@ sap.ui.define(
       },
 
       onInvoicePost: function (oEvent) {
+        this._oMessageManager.removeAllMessages();
         debugger;
         var payload = oEvent.getSource().getBindingContext().getObject();
         if (payload.VendorInvoice === "") {
@@ -176,6 +180,7 @@ sap.ui.define(
         });
       },
       onAccountPost: function (oEvent) {
+        this._oMessageManager.removeAllMessages();
         debugger;
         var payload = oEvent.getSource().getBindingContext().getObject();
         if (payload.AccountDocument === "") {
@@ -195,6 +200,7 @@ sap.ui.define(
       },
 
       onLaterDebtsPress: function (oEvent) {
+        this._oMessageManager.removeAllMessages();
         var payload = oEvent.getSource().getBindingContext().getObject();
         var oModel = this.getView().getModel();
         oModel.create("/LaterDebtHeaderSet", payload, {

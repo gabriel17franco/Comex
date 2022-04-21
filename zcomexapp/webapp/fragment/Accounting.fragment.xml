@@ -71,16 +71,12 @@
 			entitySet="AccountingSet"
 			tableBindingPath="GetAccountingItems"
 			tableType="Table"
-			useExportToExcel="true"
-			beforeExport="onBeforeExport"
-			useVariantManagement="false"
-			useTablePersonalisation="true"
 			persistencyKey="SmartTableAnalytical_Explored"
 			enableAutoBinding="true"
 			class="sapUiResponsiveContentPadding"
-			initiallyVisibleFields="Vendor,Invoice,AccountDocumentCompany,
-			AccountDocumentNum,AccountDocumentYear,AccountDocumentItem,VendorName,Currency,Account,
-			AccountVendor,DebtCreditIndicator,ItemText,Amount"
+			initiallyVisibleFields="AccountDocumentCompany,
+			AccountDocumentNum,AccountDocumentYear,AccountDocumentItem,Currency,Account,
+			AccountVendor,DebtCreditIndicator,Amount,ItemText"
 		/>
 		</blocks>
 	</ObjectPageSubSection>
