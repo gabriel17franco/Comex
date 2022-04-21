@@ -1,6 +1,5 @@
 <mvc:View
 	controllerName="comex.zcomexapp.controller.Detail"
-	xmlns:m="sap.m"
 	xmlns:mvc="sap.ui.core.mvc"
 	xmlns:semantic="sap.m.semantic"
 	xmlns="sap.uxap"
@@ -26,8 +25,6 @@
 						objectImageURI="sap-icon://my-sales-order"
 						objectImageShape="Circle"
 						objectTitle="Invoice {Invoice}"
-						objectSubtitle="{TradeVendorName}"
-						objectImageAlt="Senior UI Developer"
 						id="ObjectPageLayoutHeaderTitle"
 						isObjectIconAlwaysVisible="false"
 						isObjectTitleAlwaysVisible="false"
@@ -56,9 +53,9 @@
 				<sections>
 					<ObjectPageSection title="{i18n>vendorInvoice}">
 						<core:Fragment
-								fragmentName="comex.zcomexapp.fragment.Document"
-								type="XML"
-							/>
+							fragmentName="comex.zcomexapp.fragment.Document"
+							type="XML"
+						/>
 					</ObjectPageSection>
 					<ObjectPageSection title="{i18n>laterDebts}">
 						<ObjectPageSubSection>
@@ -70,27 +67,27 @@
 					</ObjectPageSection>
 					<ObjectPageSection title="{i18n>manualNfe}">
 						<core:Fragment
-								fragmentName="comex.zcomexapp.fragment.ManualNfe"
-								type="XML"
+							fragmentName="comex.zcomexapp.fragment.ManualNfe"
+							type="XML"
 						/>
 					</ObjectPageSection>
 					<ObjectPageSection title="{i18n>accounting}">
 						<core:Fragment
-								fragmentName="comex.zcomexapp.fragment.Accounting"
-								type="XML"
+							fragmentName="comex.zcomexapp.fragment.Accounting"
+							type="XML"
 						/>
 					</ObjectPageSection>
-						<ObjectPageSection title="{i18n>history}">
-							<core:Fragment
-								fragmentName="comex.zcomexapp.fragment.History"
-								type="XML"
+					<ObjectPageSection title="{i18n>history}">
+						<core:Fragment
+							fragmentName="comex.zcomexapp.fragment.History"
+							type="XML"
 						/>
-						</ObjectPageSection>
-					</sections>
-				</ObjectPageLayout>
-			</semantic:content>
-			<semantic:messagesIndicator>
-				<semantic:MessagesIndicator press="onMessagesButtonPress"/>
-			</semantic:messagesIndicator>
-		</semantic:DetailPage>
-	</mvc:View>
+					</ObjectPageSection>
+				</sections>
+			</ObjectPageLayout>
+		</semantic:content>
+		<semantic:messagesIndicator>
+			<semantic:MessagesIndicator press="onMessagesButtonPress"/>
+		</semantic:messagesIndicator>
+	</semantic:DetailPage>
+</mvc:View>

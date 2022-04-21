@@ -82,7 +82,7 @@
 						visible="true"
 						enabled="{detailView>/buttons/laterDebts/enabled}"
 						iconDensityAware="false"
-						press="onLaterDebtsPress"
+						press="onLaterDebtsPost"
 					/>
 				</cells>
 			</ColumnListItem>

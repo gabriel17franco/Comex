@@ -103,36 +103,6 @@ sap.ui.define(
         }
       },
 
-      onNfWritePost: function (oEvent) {
-        this._oMessageManager.removeAllMessages();
-        var payload = oEvent.getSource().getBindingContext().getObject();
-        if (payload.NfeDocument === "") {
-          payload.Action = "D";
-        } else {
-          return;
-        }
-
-        var oModel = this.getView().getModel();
-        oModel.create("/InvoiceHeaderSet", payload, {
-          success: function (oData, oResponse) {
-            debugger;
-            // var oSapMessage = JSON.parse(oResponse.headers["sap-message"]);
-
-            // if (oSapMessage.severity === "error") {
-            //   MessageBox.error(oSapMessage.message);
-            // } else {
-            //   MessageBox.success(oSapMessage.message);
-            // }
-          }.bind(this),
-          error: function (oError) {
-            debugger;
-            // var oSapMessage = JSON.parse(oError.responseText);
-            // var msg = oSapMessage.error.message.value;
-            // MessageBox.error(msg);
-          }.bind(this),
-        });
-      },
-
       onMessagesButtonPress: function (oEvent) {
         var oMessagesButton = oEvent.getSource();
         if (!this._messagePopover) {
@@ -162,7 +132,6 @@ sap.ui.define(
 
       onInvoicePost: function (oEvent) {
         this._oMessageManager.removeAllMessages();
-        debugger;
         var payload = oEvent.getSource().getBindingContext().getObject();
         if (payload.VendorInvoice === "") {
           payload.Action = "B";
@@ -171,54 +140,18 @@ sap.ui.define(
         }
         var oModel = this.getView().getModel();
         oModel.create("/InvoiceHeaderSet", payload, {
-          success: function (oData, oResponse) {
-            debugger;
-          }.bind(this),
-          error: function (oError) {
-            debugger;
-          }.bind(this),
-        });
-      },
-      onAccountPost: function (oEvent) {
-        this._oMessageManager.removeAllMessages();
-        debugger;
-        var payload = oEvent.getSource().getBindingContext().getObject();
-        if (payload.AccountDocument === "") {
-          payload.Action = "E";
-        } else {
-          payload.Action = "I";
-        }
-        var oModel = this.getView().getModel();
-        oModel.create("/InvoiceHeaderSet", payload, {
-          success: function (oData, oResponse) {
-            debugger;
-          }.bind(this),
-          error: function (oError) {
-            debugger;
-          }.bind(this),
+          success: function (oData, oResponse) {}.bind(this),
+          error: function (oError) {}.bind(this),
         });
       },
 
-      onLaterDebtsPress: function (oEvent) {
+      onLaterDebtsPost: function (oEvent) {
         this._oMessageManager.removeAllMessages();
         var payload = oEvent.getSource().getBindingContext().getObject();
         var oModel = this.getView().getModel();
         oModel.create("/LaterDebtHeaderSet", payload, {
-          success: function (oData, oResponse) {
-            debugger;
-            // var oSapMessage = JSON.parse(oResponse.headers["sap-message"]);
-            // if (oSapMessage.severity === "error") {
-            //   MessageBox.error(oSapMessage.message);
-            // } else {
-            //   MessageBox.success(oSapMessage.message);
-            // }
-          }.bind(this),
-          error: function (oError) {
-            debugger;
-            // var oSapMessage = JSON.parse(oError.responseText);
-            // var msg = oSapMessage.error.message.value;
-            // MessageBox.error(msg);
-          }.bind(this),
+          success: function (oData, oResponse) {}.bind(this),
+          error: function (oError) {}.bind(this),
         });
       },
 
@@ -257,9 +190,39 @@ sap.ui.define(
           this._oTableDetailDialog.addStyleClass("sapUiContentPadding");
           this.getView().addDependent(this._oTableDetailDialog);
         }
-
         this._oTableDetailDialog.open();
       },
+
+      onNfWritePost: function (oEvent) {
+        this._oMessageManager.removeAllMessages();
+        var payload = oEvent.getSource().getBindingContext().getObject();
+        if (payload.NfeDocument === "") {
+          payload.Action = "D";
+        } else {
+          return;
+        }
+        var oModel = this.getView().getModel();
+        oModel.create("/InvoiceHeaderSet", payload, {
+          success: function (oData, oResponse) {}.bind(this),
+          error: function (oError) {}.bind(this),
+        });
+      },
+
+      onAccountPost: function (oEvent) {
+        this._oMessageManager.removeAllMessages();
+        var payload = oEvent.getSource().getBindingContext().getObject();
+        if (payload.AccountDocument === "") {
+          payload.Action = "E";
+        } else {
+          payload.Action = "I";
+        }
+        var oModel = this.getView().getModel();
+        oModel.create("/InvoiceHeaderSet", payload, {
+          success: function (oData, oResponse) {}.bind(this),
+          error: function (oError) {}.bind(this),
+        });
+      },
+
 
       /* =========================================================== */
       /* begin: internal methods                                     */
