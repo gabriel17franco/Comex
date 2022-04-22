@@ -81,6 +81,15 @@
 			}
 		},
 
+		
+		"resources": {
+		  "css": [
+			{
+			  "uri": "css/customCss.css"
+			}
+		  ]
+		},
+
 		"routing": {
 			"config": {
 				"routerClass": "sap.m.routing.Router",

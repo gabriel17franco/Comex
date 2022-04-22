@@ -37,7 +37,15 @@ sap.ui.define(
           ),
           buttons: {
             laterDebts: {
-              icon: "",
+              enable: false,
+            },
+            invoice: {
+              enable: false,
+            },
+            nfe: {
+              enable: false,
+            },
+            accounting: {
               enable: false,
             },
           },
@@ -68,6 +76,7 @@ sap.ui.define(
         //     processor: oMessageProcessor,
         //   })
         // );
+
       },
 
       /* =========================================================== */
@@ -98,6 +107,38 @@ sap.ui.define(
             );
           }
           oViewModel.setProperty("/lineItemListTitle", sTitle);
+
+          oViewModel.setProperty("/buttons/invoice/enable", true);
+          var pendent = false;
+          var partial = false;
+
+          var oItems = this.byId("laterDebtsTable").getItems();
+          for (let item in oItems) {
+            var postDocument = oItems[item]
+              .getBindingContext()
+              .getProperty("LaterDebtDocument");
+
+            if (postDocument === "") {
+              pendent = true;
+            } else {
+              partial = true;
+            }
+          }
+
+          if (pendent === true && partial === true) {
+            oViewModel.setProperty("/buttons/nfe/enable", false);
+            oViewModel.setProperty("/buttons/invoice/enable", false);
+          }
+
+          if (pendent === false) {
+            oViewModel.setProperty("/buttons/nfe/enable", true);
+            oViewModel.setProperty("/buttons/invoice/enable", false);
+          }
+
+          if (pendent === false && partial === true) {
+            oViewModel.setProperty("/buttons/nfe/enable", true);
+            oViewModel.setProperty("/buttons/invoice/enable", false);
+          }
         }
       },
 
@@ -140,6 +181,7 @@ sap.ui.define(
         var oModel = this.getView().getModel();
         oModel.create("/InvoiceHeaderSet", payload, {
           success: function (oData, oResponse) {
+            this._ChangeButtonsStatus(oData);
             oViewModel.setProperty("/busy", false);
           }.bind(this),
           error: function (oError) {
@@ -158,12 +200,7 @@ sap.ui.define(
       },
 
       onLaterDebtsDetailPress: function (oEvent) {
-        var that = this;
-        var laterDebtPath = oEvent.getSource().getBindingContext().getPath();
-        debugger;
-        var oContex = oEvent.getSource().getElementBinding();
-        var object = oContex.getBoundContext();
-        var path = laterDebtPath + "/" + "GetLaterDebtItems";
+        var oContex = oEvent.getSource().getBindingContext();
 
         if (!this._oTableDetailDialog) {
           this._oTableDetailDialog = new sap.m.Dialog({
@@ -180,7 +217,8 @@ sap.ui.define(
                   useExportToExcel: true,
                   showRowCount: true,
                   enableAutoBinding: true,
-                  initiallyVisibleFields: "InvoiceIssuer",
+                  initiallyVisibleFields:
+                    "InvoiceIssuer,PurchaseOrder,PurchaseItem,Amount,ItemText",
                 }
               ),
             ],
@@ -195,8 +233,7 @@ sap.ui.define(
           this._oTableDetailDialog.addStyleClass("sapUiContentPadding");
           this.getView().addDependent(this._oTableDetailDialog);
         }
-        debugger;
-        this.byId("LaterDebtSmartTableDetail").bindContext(laterDebtPath);
+        this.byId("LaterDebtSmartTableDetail").setBindingContext(oContex);
         this._oTableDetailDialog.open();
       },
 
@@ -213,16 +250,19 @@ sap.ui.define(
         var oModel = this.getView().getModel();
         oModel.create("/InvoiceHeaderSet", payload, {
           success: function (oData, oResponse) {
+            this._ChangeButtonsStatus(oData);
             oViewModel.setProperty("/busy", false);
           }.bind(this),
           error: function (oError) {
+            this._ChangeButtonsStatus(oData);
             oViewModel.setProperty("/busy", false);
           }.bind(this),
         });
       },
 
       onAccountPost: function (oEvent) {
-        debugger;
+        var oViewModel = this.getModel("detailView");
+        oViewModel.setProperty("/busy", true);
         var payload = oEvent.getSource().getBindingContext().getObject();
         if (payload.AccountDocument === "") {
           payload.Action = "E";
@@ -231,8 +271,14 @@ sap.ui.define(
         }
         var oModel = this.getView().getModel();
         oModel.create("/InvoiceHeaderSet", payload, {
-          success: function (oData, oResponse) {}.bind(this),
-          error: function (oError) {}.bind(this),
+          success: function (oData, oResponse) {
+            this._ChangeButtonsStatus(oData);
+            oViewModel.setProperty("/busy", false);
+          }.bind(this),
+          error: function (oError) {
+            this._ChangeButtonsStatus(oData);
+            oViewModel.setProperty("/busy", false);
+          }.bind(this),
         });
       },
 
@@ -311,6 +357,8 @@ sap.ui.define(
           oViewModel = this.getModel("detailView");
 
         this.getOwnerComponent().oListSelector.selectAListItem(sPath);
+        var invoice = this.getView().getBindingContext().getObject();
+        this._ChangeButtonsStatus(invoice);
       },
 
       _onMetadataLoaded: function () {
@@ -338,6 +386,39 @@ sap.ui.define(
         oViewModel.setProperty("/busy", true);
         // Restore original busy indicator delay for the detail view
         oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
+      },
+
+      _ChangeButtonsStatus: function (oData) {
+        var oViewModel = this.getModel("detailView");
+
+        if (oData.AccountDocument !== "") {
+          oViewModel.setProperty("/buttons/invoice/enable", false);
+          oViewModel.setProperty("/buttons/laterDebts/enable", false);
+          oViewModel.setProperty("/buttons/nfe/enable", false);
+          oViewModel.setProperty("/buttons/accounting/enable", true);
+          return;
+        }
+
+        if (oData.NfeDocument !== "0000000000") {
+          oViewModel.setProperty("/buttons/invoice/enable", false);
+          oViewModel.setProperty("/buttons/laterDebts/enable", false);
+          oViewModel.setProperty("/buttons/nfe/enable", true);
+          oViewModel.setProperty("/buttons/accounting/enable", true);
+          return;
+        }
+        if (oData.VendorInvoice !== "") {
+          oViewModel.setProperty("/buttons/invoice/enable", true);
+          oViewModel.setProperty("/buttons/laterDebts/enable", true);
+          oViewModel.setProperty("/buttons/nfe/enable", false);
+          oViewModel.setProperty("/buttons/accounting/enable", false);
+        } else {
+          oViewModel.setProperty("/buttons/invoice/enable", true);
+          oViewModel.setProperty("/buttons/laterDebts/enable", false);
+          oViewModel.setProperty("/buttons/nfe/enable", false);
+          oViewModel.setProperty("/buttons/accounting/enable", false);
+        }
+
+        // oViewModel.setProperty();
       },
     });
   }

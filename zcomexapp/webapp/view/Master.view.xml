@@ -16,10 +16,11 @@
 					<SearchField
 						id="searchField"
 						placeholder="Pesquisar"
-						showRefreshButton="{= !${device>/support/touch} }"
 						tooltip="{i18n>masterSearchTooltip}"
 						width="100%"
-						liveChange="onSearch">
+						liveChange="onSearch"
+						
+						>
 					</SearchField>
 				</contentMiddle>
 			</Bar>
@@ -92,14 +93,18 @@
 					id="masterSort2"
 					key="Vendor"
 					text="{i18n>masterSort2}"/>
+				<core:Item
+					id="masterSort3"
+					key="ReferenceDate"
+					text="{i18n>masterSort3}"/>
 			</semantic:SortSelect>
 		</semantic:sort>
 
-		<semantic:filter>
+		<!-- <semantic:filter>
 			<semantic:FilterAction
 				id="filter"
 				press="onOpenViewSettings" />
-		</semantic:filter>
+		</semantic:filter> -->
 
 		<semantic:group>
 			<semantic:GroupSelect
@@ -119,6 +124,10 @@
 				<semantic:addAction>
 					<semantic:AddAction press="onAddPress"/>
 				</semantic:addAction>
+
+				<semantic:deleteAction>
+					<semantic:DeleteAction press="onDeletePress"/>
+				</semantic:deleteAction>
 
 	</semantic:MasterPage>
 

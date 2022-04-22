@@ -19,7 +19,7 @@
 		<headerToolbar>
 			<Toolbar>
 				<Title
-					text="Products"
+					text="{i18n>products}"
 					level="H2"
 				/>
 				<ToolbarSpacer/>
@@ -89,7 +89,7 @@
 						}"
 						width="100px"
 						visible="true"
-						enabled="{detailView>/buttons/laterDebts/enabled}"
+						enabled="{detailView>/buttons/laterDebts/enable}"
 						iconDensityAware="false"
 						press="onLaterDebtsPost"
 					/>

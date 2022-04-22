@@ -39,8 +39,28 @@
 						visible="{=${AccountDocument} !== '' }"
 					/>
 					<m:Text
-						text="{AccountDocumentDate}"
+						text="{
+							path: 'AccountDocumentDate',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+								style: 'medium'
+							}
+						}"
 						visible="{=${AccountDocument} !== '' }"
+					/>
+					<m:Label
+						text="{i18n>createdOn}"
+						visible="{= ${AccountDocument} !== ''}"
+					/>
+					<m:Text
+						text="{
+							path: 'AccountDocumentCreatedOn',
+							type: 'sap.ui.model.type.DateTime',
+							formatOptions: {
+								style: 'medium'
+							}
+						}"
+						visible="{= ${AccountDocument} !== ''}"
 					/>
 				</f:content>
 				<m:Button
@@ -50,6 +70,7 @@
 					type="Accept"
 					press="onAccountPost"
 					visible="{=${AccountDocument} === '' }"
+					enabled="{detailView>/buttons/accounting/enable}"
 				/>
 				<m:Button
 					width="100%"
@@ -58,6 +79,7 @@
 					type="Reject"
 					press="onAccountPost"
 					visible="{=${AccountDocument} !== '' }"
+					enabled="{detailView>/buttons/accounting/enable}"
 				/>
 			</f:SimpleForm>
 		</blocks>
@@ -69,12 +91,12 @@
 		<blocks>
 			<smartTable:SmartTable
 				entitySet="AccountingSet"
-				tableBindingPath="GetAccountingItems"
-				tableType="Table"
+				tableBindingPath="GetAccounting"
+				tableType="ResponsiveTable"
 				persistencyKey="SmartTableAnalytical_Explored"
 				enableAutoBinding="true"
 				class="sapUiResponsiveContentPadding"
-				initiallyVisibleFields="AccountDocumentCompany,AccountDocumentNum,AccountDocumentYear,AccountDocumentItem,Currency,Account,AccountVendor,DebtCreditIndicator,Amount,ItemText"
+				initiallyVisibleFields="Account,Denomination,Amount,ItemText"
 			/>
 		</blocks>
 	</ObjectPageSubSection>

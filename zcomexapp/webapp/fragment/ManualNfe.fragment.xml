@@ -69,6 +69,7 @@
 					type="Accept"
 					press="onNfWritePost"
 					visible="{=${NfeDocument} === '0000000000' }"
+					enabled="{detailView>/buttons/nfe/enable}"
 				/>
 				<m:Button
 					width="100%"
@@ -77,6 +78,7 @@
 					type="Reject"
 					press="onNfWritePost"
 					visible="false"
+					enabled="{detailView>/buttons/nfe/enable}"
 				/>
 			</f:SimpleForm>
 		</blocks>

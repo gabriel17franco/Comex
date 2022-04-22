@@ -1,35 +1,85 @@
 <c:FragmentDefinition
-xmlns="sap.m"
-xmlns:c="sap.ui.core"
-xmlns:xap="sap.uxap"
-xmlns:smartList="sap.ui.comp.smartlist"
-xmlns:smartTable="sap.ui.comp.smarttable"
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+	xmlns:xap="sap.uxap"
+	xmlns:smartList="sap.ui.comp.smartlist"
 >
-<xap:ObjectPageSubSection>
-	<HBox>
-		<smartList:SmartList entitySet="HistorySet" header="Log List"
-		showRowCount="true" showFullScreenButton="true" enableAutoBinding="true" listBindingPath="GetHistory" 
-	>
-	<smartList:listItemTemplate>
-		<StandardListItem
-			title="{Stepdescription}" 
-			icon="sap-icon://accept"
-			iconInset="true"
-			highlight="Success"
-			info="{path: 'Createdon',
-			type: 'sap.ui.model.type.Date',
-			formatOptions: {
-				style: 'short'
-			}}"
-			description="{Createdby}" 
-			infoState="None"
-
-		/>
-			
-	</smartList:listItemTemplate>
-	</smartList:SmartList>
-	</HBox>
-</xap:ObjectPageSubSection>
-
-
+	<xap:ObjectPageSubSection>
+		<HBox>
+			<smartList:SmartList
+				entitySet="HistorySet"
+				header="{i18n>logList}"
+				showFullScreenButton="true"
+				enableAutoBinding="true"
+				listBindingPath="GetHistory"
+			>
+				<smartList:listItemTemplate>
+					<!-- <StandardListItem
+						id="SmartListHistory"
+						title="{StepDescription} - {MessageText}"
+						icon="{Icon}"
+						iconInset="true"
+						highlight="{Highlight}"
+						info="{
+							path: 'CreatedOn',
+							type: 'sap.ui.model.type.DateTime',
+							formatOptions: {
+								style: 'medium'
+							}
+						}"
+						description="{CreatedByName}"
+						infoState="None"
+					/> -->
+					<CustomListItem highlight="{Highlight}">
+						<HBox
+							justifyContent="Center"
+							fitContainer="true"
+						>
+							<VBox height="200px"/>
+							<Label text="     "/>
+							<VBox justifyContent="Center">
+								<c:Icon
+									src="{Icon}"
+									size="25px"
+								/>
+							</VBox>
+							<Label text="    "/>
+							<VBox>
+								<Label
+									text="{StepDescription}"
+									class="logItemDescription"
+								/>
+								<Label text="{MessageText}"/>
+							</VBox>
+							<Label text="     "/>
+							<VBox width="100%"/>
+							<VBox
+								alignContent="End"
+								justifyContent="Center"
+							>
+								<Label
+									text="{CreatedByName}"
+									class="logMinimalText"
+								/>
+								<Label
+									text="{
+										path: 'CreatedOn',
+										type: 'sap.ui.model.type.DateTime',
+										formatOptions: {
+											style: 'medium'
+										}
+									}"
+									class="logMinimalText"
+								/>
+							</VBox>
+							<Label text="    "/>
+							<VBox>
+								<Label text="teste"/>
+							</VBox>
+						</HBox>
+					</CustomListItem>
+				</smartList:listItemTemplate>
+			</smartList:SmartList>
+		</HBox>
+	</xap:ObjectPageSubSection>
 </c:FragmentDefinition>

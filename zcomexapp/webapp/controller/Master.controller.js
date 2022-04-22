@@ -107,16 +107,24 @@ sap.ui.define(
        * @param {sap.ui.base.Event} oEvent the search event
        * @public
        */
-       onSearch: function (oEvent) {
+      onSearch: function (oEvent) {
         var sQuery = oEvent.getSource().getValue();
         if (sQuery && sQuery.length > 0) {
-          this._oListFilterState.aSearch = 
-            new Filter({
-                filters:[
-                  new sap.ui.model.Filter("Invoice", sap.ui.model.FilterOperator.Contains, sQuery),
-                  new sap.ui.model.Filter("VendorName", sap.ui.model.FilterOperator.Contains, sQuery)
-                ], and: false
-            })
+          this._oListFilterState.aSearch = new Filter({
+            filters: [
+              new sap.ui.model.Filter(
+                "Invoice",
+                sap.ui.model.FilterOperator.Contains,
+                sQuery
+              ),
+              new sap.ui.model.Filter(
+                "VendorName",
+                sap.ui.model.FilterOperator.Contains,
+                sQuery
+              ),
+            ],
+            and: false,
+          });
         } else {
           this._oListFilterState.aSearch = [];
         }
@@ -140,7 +148,6 @@ sap.ui.define(
       onSort: function (oEvent) {
         var sKey = oEvent.getSource().getSelectedItem().getKey(),
           aSorters = this._oGroupSortState.sort(sKey);
-
         this._applyGroupSort(aSorters);
       },
 
@@ -294,8 +301,38 @@ sap.ui.define(
           this.getView().addDependent(this._oUploadDialog);
         }
         this.getModel("masterView").setProperty("/uploadButton", false);
-        this.getModel("masterView").setProperty("/uploadInicialValue", "");
         this._oUploadDialog.open();
+        this.getModel("masterView").setProperty("/uploadInicialValue", "");
+      },
+
+      onDeletePress(oEvent) {
+        var oModel = this.getView().getModel();
+        var SelectedContext = this._oList.getSelectedItem().getBindingContext();
+        var VendorInvoice = SelectedContext.getProperty("VendorInvoice");
+        var invoicePath = SelectedContext.getPath()
+
+        debugger;
+        if (VendorInvoice !== "") {
+          return;
+        }
+
+        oModel.remove(invoicePath, {
+          success: function (oData, oResponse) {
+            var oSapMessage = JSON.parse(oResponse.headers["sap-message"]);
+            this.onRefresh();
+
+            if (oSapMessage.severity === "error") {
+              MessageBox.error(oSapMessage.message);
+            } else {
+              MessageBox.success(oSapMessage.message);
+            }
+          }.bind(this),
+          error: function (oError) {
+            var oSapMessage = JSON.parse(oError.responseText);
+            var msg = oSapMessage.error.message.value;
+            MessageBox.error(msg);
+          }.bind(this),
+        });
       },
 
       /* =========================================================== */
@@ -343,6 +380,7 @@ sap.ui.define(
           oModel.create("/UploadSet", payload, {
             success: function (oData, oResponse) {
               var oSapMessage = JSON.parse(oResponse.headers["sap-message"]);
+              this.onRefresh();
 
               if (oSapMessage.severity === "error") {
                 MessageBox.error(oSapMessage.message);
@@ -447,8 +485,8 @@ sap.ui.define(
        * @private
        */
       _applyFilterSearch: function () {
-        var aFilters = this._oListFilterState.aSearch
-            
+        var aFilters = this._oListFilterState.aSearch;
+
         var oViewModel = this.getModel("masterView");
         this._oList.getBinding("items").filter(aFilters, "Application");
         // changes the noDataText of the list in case there are no filter results
