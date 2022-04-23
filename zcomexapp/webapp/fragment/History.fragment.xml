@@ -14,70 +14,21 @@
 				listBindingPath="GetHistory"
 			>
 				<smartList:listItemTemplate>
-					<!-- <StandardListItem
-						id="SmartListHistory"
-						title="{StepDescription} - {MessageText}"
-						icon="{Icon}"
-						iconInset="true"
-						highlight="{Highlight}"
-						info="{
-							path: 'CreatedOn',
-							type: 'sap.ui.model.type.DateTime',
-							formatOptions: {
-								style: 'medium'
-							}
-						}"
-						description="{CreatedByName}"
-						infoState="None"
-					/> -->
-					<CustomListItem highlight="{Highlight}">
-						<HBox
-							justifyContent="Center"
-							fitContainer="true"
-						>
-							<VBox height="200px"/>
-							<Label text="     "/>
-							<VBox justifyContent="Center">
-								<c:Icon
-									src="{Icon}"
-									size="25px"
-								/>
-							</VBox>
-							<Label text="    "/>
-							<VBox>
-								<Label
-									text="{StepDescription}"
-									class="logItemDescription"
-								/>
-								<Label text="{MessageText}"/>
-							</VBox>
-							<Label text="     "/>
-							<VBox width="100%"/>
-							<VBox
-								alignContent="End"
-								justifyContent="Center"
-							>
-								<Label
-									text="{CreatedByName}"
-									class="logMinimalText"
-								/>
-								<Label
-									text="{
-										path: 'CreatedOn',
-										type: 'sap.ui.model.type.DateTime',
-										formatOptions: {
-											style: 'medium'
-										}
-									}"
-									class="logMinimalText"
-								/>
-							</VBox>
-							<Label text="    "/>
-							<VBox>
-								<Label text="teste"/>
-							</VBox>
-						</HBox>
-					</CustomListItem>
+					<NotificationListItem
+					title="{StepDescription}"
+					description="{MessageText}"
+					datetime="{
+						path: 'CreatedOn',
+						type: 'sap.ui.model.type.DateTime',
+						formatOptions: {
+							style: 'medium'
+						}
+					}"
+					highlight="{Highlight}"
+					showCloseButton="false"
+					priority="Low"
+					authorName="{CreatedByName}"
+					authorPicture="{Icon}" />
 				</smartList:listItemTemplate>
 			</smartList:SmartList>
 		</HBox>

@@ -41,7 +41,6 @@ sap.ui.define([], function () {
 		} else {
 		  return "sap-icon://media-reverse";
 		}
-	  },
-
+	  }
   };
 });
