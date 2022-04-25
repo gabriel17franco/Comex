@@ -90,6 +90,7 @@
 	>
 		<blocks>
 			<smartTable:SmartTable
+				id = "SmartTableAccounting"
 				entitySet="AccountingSet"
 				tableBindingPath="GetAccounting"
 				tableType="ResponsiveTable"

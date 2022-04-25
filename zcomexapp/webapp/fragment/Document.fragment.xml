@@ -90,13 +90,15 @@
 				id="InvoiceItemsSmartTable"
 				entitySet="InvoiceItemsSet"
 				tableBindingPath="GetInvoiceItems"
-				tableType="ResponsiveTable"
+				tableType="Table"
 				persistencyKey="SmartTableAnalytical_Explored"
 				showFullScreenButton="true"
 				enableAutoBinding="true"
 				class="sapUiResponsiveContentPadding"
-				initiallyVisibleFields="InvoiceItem,PurchaseOrder,PurchaseItem,Material,MaterialDescription,Quantity,Amount"
-			/>
+				initiallyVisibleFields="InvoiceItem,PurchaseOrder,PurchaseItem,Material,Quantity,Amount"
+			>
+				<m:Table updateFinished=".doModifyColumn"/>
+			</smartTable:SmartTable>
 		</blocks>
 	</ObjectPageSubSection>
 </c:FragmentDefinition>

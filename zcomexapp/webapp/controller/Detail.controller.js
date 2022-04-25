@@ -76,7 +76,6 @@ sap.ui.define(
         //     processor: oMessageProcessor,
         //   })
         // );
-
       },
 
       /* =========================================================== */
@@ -282,6 +281,21 @@ sap.ui.define(
         });
       },
 
+      doModifyColumn: function (oEvent) {
+        var that = this;
+        var oTable = oEvent.getSource();
+        oTable.getColumns().forEach(function (oColumn) {
+          // debugger;
+          // oTable.autoResizeColumn(oColumn.getIndex());
+        });
+        // f (oColumn.sId.includes("Matnr") || oColumn.sId.includes("Aufnr")) {
+        //         oColumn.setWidth("30%");
+        //         //oTable.autoResizeColumn(oColumn.getIndex());
+        //       }
+
+        //     });
+      },
+
       /* =========================================================== */
       /* begin: internal methods                                     */
       /* =========================================================== */
@@ -390,6 +404,7 @@ sap.ui.define(
 
       _ChangeButtonsStatus: function (oData) {
         var oViewModel = this.getModel("detailView");
+        this._refresh();
 
         if (oData.AccountDocument !== "") {
           oViewModel.setProperty("/buttons/invoice/enable", false);
@@ -417,8 +432,17 @@ sap.ui.define(
           oViewModel.setProperty("/buttons/nfe/enable", false);
           oViewModel.setProperty("/buttons/accounting/enable", false);
         }
+        
 
         // oViewModel.setProperty();
+      },
+
+      _refresh: function () {
+        var SmartListHistory = this.byId("SmartListHistory");
+        SmartListHistory.rebindList();
+
+        var SmartTableAccounting = this.byId("SmartTableAccounting");
+        SmartTableAccounting.rebindTable(); 
       },
     });
   }
