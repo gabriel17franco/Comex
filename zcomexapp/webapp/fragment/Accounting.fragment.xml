@@ -97,7 +97,7 @@
 				persistencyKey="SmartTableAnalytical_Explored"
 				enableAutoBinding="true"
 				class="sapUiResponsiveContentPadding"
-				initiallyVisibleFields="Account,Denomination,Amount,ItemText"
+				initiallyVisibleFields="Account,Amount,ItemText"
 			/>
 		</blocks>
 	</ObjectPageSubSection>
