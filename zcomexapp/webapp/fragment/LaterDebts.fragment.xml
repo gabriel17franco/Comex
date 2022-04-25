@@ -1,6 +1,7 @@
 <c:FragmentDefinition
 	xmlns="sap.m"
 	xmlns:c="sap.ui.core"
+	xmlns:smartField="sap.ui.comp.smartfield"
 >
 	<Table
 		id="laterDebtsTable"
@@ -45,10 +46,19 @@
 		<items>
 			<ColumnListItem vAlign="Middle">
 				<cells>
-					<ObjectIdentifier
+					<!-- <ObjectIdentifier
 						title="{InvoiceIssuerName}"
 						text="{InvoiceIssuer}"
-					/>
+					/> -->
+					<smartField:SmartField
+						id="idCreatedBy"
+						value="{InvoiceIssuer}"
+						
+					>
+						<smartField:configuration >
+							<smartField:Configuration displayBehaviour="descriptionAndId" />
+						</smartField:configuration>
+					</smartField:SmartField>
 					<Text
 						text="{
 							parts: [{

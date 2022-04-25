@@ -7,6 +7,7 @@
 	<xap:ObjectPageSubSection>
 		<HBox>
 			<smartList:SmartList
+				id = "SmartListHistory"
 				entitySet="HistorySet"
 				header="{i18n>logList}"
 				showFullScreenButton="true"
@@ -26,7 +27,7 @@
 					}"
 					highlight="{Highlight}"
 					showCloseButton="false"
-					priority="Low"
+					priority="{Priority}"
 					authorName="{CreatedByName}"
 					authorPicture="{Icon}" />
 				</smartList:listItemTemplate>
