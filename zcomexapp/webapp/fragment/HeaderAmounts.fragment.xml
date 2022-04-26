@@ -15,6 +15,10 @@
 					text="{TradeVendor} - {TradeVendorName}"
 				/>
 				<m:ObjectStatus
+					title="NF-e"
+					text="{Nfe}-{Serie}"
+				/>
+				<m:ObjectStatus
 					title="{i18n>invoiceType}"
 					text="{Type}"
 				/>

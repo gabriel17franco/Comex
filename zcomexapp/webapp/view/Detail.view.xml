@@ -32,9 +32,10 @@
 					>
 						<!-- <actions>
 							<ObjectPageHeaderActionButton
-								icon="sap-icon://pull-down"
-								text="show section"
+								icon="sap-icon://download"
+								text="Template Download"
 								type="Emphasized"
+								press="onTemplateDownloadPress"
 							/>
 							<ObjectPageHeaderActionButton
 								icon="sap-icon://show"

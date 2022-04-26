@@ -178,6 +178,7 @@ sap.ui.define(
           payload.Action = "F";
         }
         var oModel = this.getView().getModel();
+        debugger;
         oModel.create("/InvoiceHeaderSet", payload, {
           success: function (oData, oResponse) {
             this._ChangeButtonsStatus(oData);
@@ -272,6 +273,8 @@ sap.ui.define(
         oModel.create("/InvoiceHeaderSet", payload, {
           success: function (oData, oResponse) {
             this._ChangeButtonsStatus(oData);
+            var SmartTableAccounting = this.byId("SmartTableAccounting");
+            SmartTableAccounting.rebindTable();
             oViewModel.setProperty("/busy", false);
           }.bind(this),
           error: function (oError) {
@@ -432,7 +435,6 @@ sap.ui.define(
           oViewModel.setProperty("/buttons/nfe/enable", false);
           oViewModel.setProperty("/buttons/accounting/enable", false);
         }
-        
 
         // oViewModel.setProperty();
       },
@@ -440,9 +442,6 @@ sap.ui.define(
       _refresh: function () {
         var SmartListHistory = this.byId("SmartListHistory");
         SmartListHistory.rebindList();
-
-        var SmartTableAccounting = this.byId("SmartTableAccounting");
-        SmartTableAccounting.rebindTable(); 
       },
     });
   }

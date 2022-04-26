@@ -309,9 +309,8 @@ sap.ui.define(
         var oModel = this.getView().getModel();
         var SelectedContext = this._oList.getSelectedItem().getBindingContext();
         var VendorInvoice = SelectedContext.getProperty("VendorInvoice");
-        var invoicePath = SelectedContext.getPath()
+        var invoicePath = SelectedContext.getPath();
 
-        debugger;
         if (VendorInvoice !== "") {
           return;
         }
@@ -320,6 +319,7 @@ sap.ui.define(
           success: function (oData, oResponse) {
             var oSapMessage = JSON.parse(oResponse.headers["sap-message"]);
             this.onRefresh();
+            this.getOwnerComponent().oListSelector.setBoundMasterList(this._oList);
 
             if (oSapMessage.severity === "error") {
               MessageBox.error(oSapMessage.message);
@@ -380,18 +380,20 @@ sap.ui.define(
           oModel.create("/UploadSet", payload, {
             success: function (oData, oResponse) {
               var oSapMessage = JSON.parse(oResponse.headers["sap-message"]);
-              this.onRefresh();
+              that.onRefresh();
 
               if (oSapMessage.severity === "error") {
                 MessageBox.error(oSapMessage.message);
               } else {
                 MessageBox.success(oSapMessage.message);
               }
+              that._oUploadDialog.close();
             }.bind(this),
             error: function (oError) {
-              var oSapMessage = JSON.parse(oError.responseText);
-              var msg = oSapMessage.error.message.value;
-              MessageBox.error(msg);
+              that._submitError(oError.responseText);
+              // var oSapMessage = JSON.parse(oError.responseText);
+              // var msg = oSapMessage.error.message.value;
+              // MessageBox.error(msg);
             }.bind(this),
           });
         }
@@ -532,6 +534,40 @@ sap.ui.define(
             sFilterBarText,
           ])
         );
+      },
+
+      _submitError: function (responseBody) {
+        debugger;
+        try {
+          var body = JSON.parse(responseBody);
+          var errorDetails = body.error.innererror.errordetails;
+          if (errorDetails) {
+            if (errorDetails.length > 0) {
+              for (i = 0; i < errorDetails.length; i++) {
+                MessageBox.error(errorDetails[i].message);
+              }
+            } else MessageBox.error(body.error.message.value);
+          } else MessageBox.error(body.error.message.value);
+        } catch (err) {
+          try {
+            //the error is in xml format. Technical error by framework
+            switch (typeof responseBody) {
+              case "string": // XML or simple text
+                if (responseBody.indexOf("<?xml") > -1) {
+                  var oXML = jQuery.parseXML(responseBody);
+                  var oXMLMsg = oXML.querySelector("message");
+                  if (oXMLMsg) MessageBox.error(oXMLMsg.textContent);
+                } else MessageBox.error(responseBody);
+
+                break;
+              case "object": // Exception
+                MessageBox.error(responseBody.toString());
+                break;
+            }
+          } catch (err) {
+            MessageBox.error("common error message");
+          }
+        }
       },
     });
   }

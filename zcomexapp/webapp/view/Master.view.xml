@@ -121,13 +121,28 @@
 					text="{i18n>masterGroup1}"/>
 			</semantic:GroupSelect>
 		</semantic:group>
-				<semantic:addAction>
+		
+				<!-- <semantic:addAction>
 					<semantic:AddAction press="onAddPress"/>
-				</semantic:addAction>
+				</semantic:addAction> -->
 
-				<semantic:deleteAction>
-					<semantic:DeleteAction press="onDeletePress"/>
-				</semantic:deleteAction>
+				<semantic:customFooterContent>
+				<Button
+				tooltip="{i18n>addInvoice}"
+				icon="sap-icon://add"
+				press="onAddPress">
+				</Button>
+				<Button
+				tooltip="{i18n>deleteInvoice}"
+				icon="sap-icon://less"
+				press="onDeletePress">
+				</Button>
+				<Button
+				tooltip="{i18n>templateDownload}"
+				icon="sap-icon://download"
+				press="onTemplateDownloadPress">
+				</Button>
+				</semantic:customFooterContent>
 
 	</semantic:MasterPage>
 
