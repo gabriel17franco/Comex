@@ -140,7 +140,8 @@
 				<Button
 				tooltip="{i18n>templateDownload}"
 				icon="sap-icon://download"
-				press="onTemplateDownloadPress">
+				press="onTemplateDownloadPress"
+				text="CSV">
 				</Button>
 				</semantic:customFooterContent>
 

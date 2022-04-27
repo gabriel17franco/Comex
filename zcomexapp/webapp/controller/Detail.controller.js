@@ -178,7 +178,6 @@ sap.ui.define(
           payload.Action = "F";
         }
         var oModel = this.getView().getModel();
-        debugger;
         oModel.create("/InvoiceHeaderSet", payload, {
           success: function (oData, oResponse) {
             this._ChangeButtonsStatus(oData);
@@ -288,7 +287,6 @@ sap.ui.define(
         var that = this;
         var oTable = oEvent.getSource();
         oTable.getColumns().forEach(function (oColumn) {
-          // debugger;
           // oTable.autoResizeColumn(oColumn.getIndex());
         });
         // f (oColumn.sId.includes("Matnr") || oColumn.sId.includes("Aufnr")) {

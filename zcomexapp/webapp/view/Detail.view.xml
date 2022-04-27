@@ -30,19 +30,19 @@
 						isObjectTitleAlwaysVisible="false"
 						showPlaceholder="true"
 					>
-						<!-- <actions>
+						<actions>
 							<ObjectPageHeaderActionButton
 								icon="sap-icon://download"
 								text="Template Download"
 								type="Emphasized"
 								press="onTemplateDownloadPress"
 							/>
-							<ObjectPageHeaderActionButton
+							<!-- <ObjectPageHeaderActionButton
 								icon="sap-icon://show"
 								text="show state"
 								type="Emphasized"
-							/>
-						</actions> -->
+							/> -->
+						</actions>
 					</ObjectPageHeader>
 				</headerTitle>
 				<headerContent>

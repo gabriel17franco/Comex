@@ -60,18 +60,42 @@ sap.ui.define(
         }
       },
 
-      onTemplateDownloadPress: function () {
-        $.get("utils/templatebase64.txt", function (csvContent) {
-          var blob;
-          blob = window.atob(csvContent);
-          var link = document.createElement("a");
-          if (link.download !== undefined) {
-            link.href = "data:text/csv;charset=utf-8," + encodeURI(blob);
-            link.target = "_blank";
-            link.download = "template.csv";
-            link.click();
-          }
+      onTemplateDownloadPress: function (oEvent) {
+        var oModel = this.getView().getModel();
+        if (!this._oList) {
+          var SelectedContext = oEvent.getSource().getBindingContext();
+          var sPath = SelectedContext.getPath() + "/" + "GetAttachments";
+        } else {
+          SelectedContext = this._oList.getSelectedItem().getBindingContext();
+          sPath = this._oList.getSelectedContextPaths() + "/" + "GetAttachments";
+        };
+        var Invoice = SelectedContext.getProperty("Invoice");
+        oModel.read(sPath, {
+          success: function (oData, oResponse) {
+            // var blob = window.atob(oData.results[0].CsvContent);
+            var link = document.createElement("a");
+            if (link.download !== undefined) {
+              link.href = oData.results[0].CsvContent;
+              link.target = "_blank";
+              link.download = Invoice + ".csv";
+              link.click();
+            }
+          },
+          error: function (oError) {
+          },
         });
+
+        // $.get("utils/templatebase64.txt", function (csvContent) {
+        //   var blob;
+        //   blob = window.atob(csvContent);
+        //   var link = document.createElement("a");
+        //   if (link.download !== undefined) {
+        //     link.href = "data:text/csv;charset=utf-8," + encodeURI(blob);
+        //     link.target = "_blank";
+        //     link.download = "template.csv";
+        //     link.click();
+        //   }
+        // });
       },
     });
   }

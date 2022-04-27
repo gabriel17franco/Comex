@@ -319,7 +319,9 @@ sap.ui.define(
           success: function (oData, oResponse) {
             var oSapMessage = JSON.parse(oResponse.headers["sap-message"]);
             this.onRefresh();
-            this.getOwnerComponent().oListSelector.setBoundMasterList(this._oList);
+            this.getOwnerComponent().oListSelector.setBoundMasterList(
+              this._oList
+            );
 
             if (oSapMessage.severity === "error") {
               MessageBox.error(oSapMessage.message);
@@ -350,20 +352,38 @@ sap.ui.define(
 
           reader.onload = function (e) {
             var unicode = e.currentTarget.result;
-            csvToJson(unicode, that);
+            getBase64(file, unicode, that);
+            // csvToJson(unicode, that);
           };
           reader.readAsBinaryString(file);
         }
 
-        function csvToJson(csv, that) {
+        function getBase64(file, unicode, that) {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function (f) {
+              resolve();
+              csvToJson(unicode, reader.result, that);
+            };
+            reader.onerror = (error) => reject(error);
+          });
+        }
+
+        function csvToJson(csv, base64, that) {
           const lines = csv.split("\r\n");
           const result = [];
           const headers = lines[0].split(";");
+
+          headers.push("csv_content");
 
           for (let i = 1; i < lines.length; i++) {
             if (!lines[i]) continue;
             const obj = {};
             const currentline = lines[i].split(";");
+
+            currentline.push(base64);
+            base64 = "";
 
             for (let j = 0; j < headers.length; j++) {
               obj[headers[j]] = currentline[j];
@@ -537,7 +557,6 @@ sap.ui.define(
       },
 
       _submitError: function (responseBody) {
-        debugger;
         try {
           var body = JSON.parse(responseBody);
           var errorDetails = body.error.innererror.errordetails;
