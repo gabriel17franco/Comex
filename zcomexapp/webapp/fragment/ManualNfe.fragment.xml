@@ -77,7 +77,7 @@
 					text="{i18n>reverseNfe}"
 					type="Reject"
 					press="onNfWritePost"
-					visible="false"
+					visible="{=${NfeDocument} !== '0000000000' }"
 					enabled="{detailView>/buttons/nfe/enable}"
 				/>
 			</f:SimpleForm>

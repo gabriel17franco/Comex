@@ -69,6 +69,11 @@ sap.ui.define(
 
         this._oMessageManager.registerMessageProcessor(oMessageProcessor);
 
+        // var iconHeader = this.byId("ObjectPageLayoutHeaderTitle-flag");
+
+        // iconHeader.setTooltip("Status");
+        // iconHeader.mProperties.src = "";
+
         // this._oMessageManager.addMessages(
         //   new sap.ui.core.message.Message({
         //     message: "Something wrong happened",
@@ -193,7 +198,9 @@ sap.ui.define(
         var payload = oEvent.getSource().getBindingContext().getObject();
         var oModel = this.getView().getModel();
         oModel.create("/LaterDebtHeaderSet", payload, {
-          success: function (oData, oResponse) {}.bind(this),
+          success: function (oData, oResponse) {
+            this._refresh();
+          }.bind(this),
           error: function (oError) {}.bind(this),
         });
       },
@@ -243,8 +250,7 @@ sap.ui.define(
         if (payload.NfeDocument === "0000000000") {
           payload.Action = "D";
         } else {
-          oViewModel.setProperty("/busy", false);
-          return;
+          payload.Action = "H";
         }
         var oModel = this.getView().getModel();
         oModel.create("/InvoiceHeaderSet", payload, {
@@ -405,13 +411,21 @@ sap.ui.define(
 
       _ChangeButtonsStatus: function (oData) {
         var oViewModel = this.getModel("detailView");
+        var oAppModel = this.getModel("App");
+
+        // this.byId("ObjectPageLayoutHeaderTitle-flag").mProperties.src = "";
+
         this._refresh();
+        debugger;
 
         if (oData.AccountDocument !== "") {
+          oAppModel.setProperty("/invoiceHighlight", "Success");
           oViewModel.setProperty("/buttons/invoice/enable", false);
           oViewModel.setProperty("/buttons/laterDebts/enable", false);
           oViewModel.setProperty("/buttons/nfe/enable", false);
           oViewModel.setProperty("/buttons/accounting/enable", true);
+          // this.byId("ObjectPageLayoutHeaderTitle-flag").mProperties.src =
+          //   "sap-icon://accept";
           return;
         }
 

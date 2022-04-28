@@ -34,13 +34,20 @@ sap.ui.define([], function () {
         return "Reject";
       }
     },
+    getInvoiceHighlight: function (sValue) {
+      if (sValue !== "") {
+        return "Success";
+      } else {
+        return "None";
+      }
+    },
 
-	getLaterButtonIcon: function (sValue) {
-		if (sValue === "") {
-		  return "sap-icon://media-play";
-		} else {
-		  return "sap-icon://media-reverse";
-		}
-	  }
+    getLaterButtonIcon: function (sValue) {
+      if (sValue === "") {
+        return "sap-icon://media-play";
+      } else {
+        return "sap-icon://media-reverse";
+      }
+    },
   };
 });

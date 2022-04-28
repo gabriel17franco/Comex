@@ -63,7 +63,12 @@
 				<items>
 					<ObjectListItem
 						type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}"
-						title="{Invoice}">
+						title="{Invoice}"
+						highlight="{
+							path: 'AccountDocument',
+							formatter: '.formatter.getInvoiceHighlight'
+						}">
+
 						<attributes>
 							<ObjectAttribute text="{VendorName}" />
 							<ObjectAttribute text="{
@@ -73,6 +78,7 @@
 													style: 'short'
 												}
 											}" />
+											
 						</attributes>
 						
 					</ObjectListItem>
