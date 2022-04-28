@@ -56,7 +56,7 @@
 		<m:HBox>
 			<m:VBox>
 				<m:ObjectStatus
-					title="{/#InvoiceHeader/TotalAmount/@sap:label}"
+					title="{i18n>totalGoodsAmount}"
 					text="{
 						parts: [{
 							path: 'TotalAmount'
@@ -69,8 +69,9 @@
 						}
 					}"
 				/>
+
 				<m:ObjectStatus
-					title="{/#InvoiceHeader/TotalFreight/@sap:label}"
+					title="{i18n>freightAmount}"
 					text="{
 						parts: [{
 							path: 'TotalFreight'
@@ -84,7 +85,7 @@
 					}"
 				/>
 				<m:ObjectStatus
-					title="{/#InvoiceHeader/TotalInsurance/@sap:label}"
+					title="{i18n>insuranceAmount}"
 					text="{
 						parts: [{
 							path: 'TotalInsurance'
@@ -98,7 +99,7 @@
 					}"
 				/>
 				<m:ObjectStatus
-					title="{/#InvoiceHeader/TotalDa/@sap:label}"
+					title="{i18n>daAmount}"
 					text="{
 						parts: [{
 							path: 'TotalDa'
@@ -112,7 +113,7 @@
 					}"
 				/>
 				<m:ObjectStatus
-					title="{/#InvoiceHeader/TotalSicomex/@sap:label}"
+					title="{i18n>siscomexAmount}"
 					text="{
 						parts: [{
 							path: 'TotalSicomex'
@@ -129,7 +130,7 @@
 			<m:VBox width="100px"/>
 			<m:VBox>
 				<m:ObjectStatus
-					title="{/#InvoiceHeader/TotalAmountMi/@sap:label}"
+					title="{i18n>totalGoodsAmountLC}"
 					text="{
 						parts: [{
 							path: 'TotalAmountMi'
@@ -143,7 +144,7 @@
 					}"
 				/>
 				<m:ObjectStatus
-					title="{/#InvoiceHeader/TotalFreightMi/@sap:label}"
+					title="{i18n>freightAmountLC}"
 					text="{
 						parts: [{
 							path: 'TotalFreightMi'
@@ -157,7 +158,7 @@
 					}"
 				/>
 				<m:ObjectStatus
-					title="{/#InvoiceHeader/TotalInsuranceMi/@sap:label}"
+					title="{i18n>insuranceAmountLC}"
 					text="{
 						parts: [{
 							path: 'TotalInsuranceMi'
@@ -171,7 +172,7 @@
 					}"
 				/>
 				<m:ObjectStatus
-					title="{/#InvoiceHeader/TotalDaMi/@sap:label}"
+					title="{i18n>daAmountLC}"
 					text="{
 						parts: [{
 							path: 'TotalDaMi'
@@ -185,7 +186,7 @@
 					}"
 				/>
 				<m:ObjectStatus
-					title="{/#InvoiceHeader/TotalSicomexMi/@sap:label}"
+					title="{i18n>siscomexAmountLC}"
 					text="{
 						parts: [{
 							path: 'TotalSicomexMi'

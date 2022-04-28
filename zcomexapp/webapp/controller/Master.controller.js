@@ -319,9 +319,6 @@ sap.ui.define(
           success: function (oData, oResponse) {
             var oSapMessage = JSON.parse(oResponse.headers["sap-message"]);
             this.onRefresh();
-            this.getOwnerComponent().oListSelector.setBoundMasterList(
-              this._oList
-            );
 
             if (oSapMessage.severity === "error") {
               MessageBox.error(oSapMessage.message);

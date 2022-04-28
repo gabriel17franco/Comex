@@ -129,20 +129,20 @@
 				<semantic:customFooterContent>
 				<Button
 				tooltip="{i18n>addInvoice}"
-				icon="sap-icon://add"
+				icon="sap-icon://add-document"
 				press="onAddPress">
 				</Button>
 				<Button
 				tooltip="{i18n>deleteInvoice}"
-				icon="sap-icon://less"
+				icon="sap-icon://delete"
 				press="onDeletePress">
 				</Button>
-				<Button
+				<!-- <Button
 				tooltip="{i18n>templateDownload}"
 				icon="sap-icon://download"
 				press="onTemplateDownloadPress"
 				text="CSV">
-				</Button>
+				</Button> -->
 				</semantic:customFooterContent>
 
 	</semantic:MasterPage>
