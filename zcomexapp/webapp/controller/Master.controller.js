@@ -312,6 +312,8 @@ sap.ui.define(
         var invoicePath = SelectedContext.getPath();
 
         if (VendorInvoice !== "") {
+          var msg = this.getResourceBundle().getText("deleteInvoiceMsg")
+          MessageBox.error(msg);
           return;
         }
 

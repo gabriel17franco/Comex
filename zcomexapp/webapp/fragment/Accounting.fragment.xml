@@ -5,7 +5,7 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns="sap.uxap"
 >
-	<ObjectPageSubSection>
+	<ObjectPageSubSection title="{i18n>document}">
 		<blocks>
 			<f:SimpleForm
 				editable="true"
@@ -84,13 +84,10 @@
 			</f:SimpleForm>
 		</blocks>
 	</ObjectPageSubSection>
-	<ObjectPageSubSection
-		title="{i18n>ledgerAccount}"
-		titleUppercase="true"
-	>
+	<ObjectPageSubSection title="{i18n>ledgerAccount}">
 		<blocks>
 			<smartTable:SmartTable
-				id = "SmartTableAccounting"
+				id="SmartTableAccounting"
 				entitySet="AccountingSet"
 				tableBindingPath="GetAccounting"
 				tableType="ResponsiveTable"
