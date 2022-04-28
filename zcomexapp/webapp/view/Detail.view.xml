@@ -38,17 +38,6 @@
 								icon="sap-icon://download"
 								press="onTemplateDownloadPress"
 							/>
-							<!-- <ObjectPageHeaderActionButton
-								icon="sap-icon://download"
-								text="Template Download"
-								type="Emphasized"
-								press="onTemplateDownloadPress"
-							/> -->
-							<!-- <ObjectPageHeaderActionButton
-								icon="sap-icon://show"
-								text="show state"
-								type="Emphasized"
-							/> -->
 						</actions>
 					</ObjectPageHeader>
 				</headerTitle>

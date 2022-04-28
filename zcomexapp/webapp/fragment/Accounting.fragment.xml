@@ -64,7 +64,7 @@
 					/>
 				</f:content>
 				<m:Button
-					width="100%"
+					width="auto"
 					icon="sap-icon://accept"
 					text="{i18n>postingAccounting}"
 					type="Accept"
@@ -73,7 +73,7 @@
 					enabled="{detailView>/buttons/accounting/enable}"
 				/>
 				<m:Button
-					width="100%"
+					width="auto"
 					icon="sap-icon://decline"
 					text="{i18n>reverseAccounting}"
 					type="Reject"
