@@ -128,10 +128,12 @@ sap.ui.define(
               partial = true;
             }
           }
-
+          var AccountingDocument = oEvent.getSource().getBindingContext().getProperty("AccountDocument");
+          debugger;
           if (pendent === true && partial === true) {
             oViewModel.setProperty("/buttons/nfe/enable", false);
             oViewModel.setProperty("/buttons/invoice/enable", false);
+            oViewModel.setProperty("/buttons/laterDebts/enable", true);
           }
 
           if (pendent === false) {
@@ -142,7 +144,13 @@ sap.ui.define(
           if (pendent === false && partial === true) {
             oViewModel.setProperty("/buttons/nfe/enable", true);
             oViewModel.setProperty("/buttons/invoice/enable", false);
+            this._laterDebtConcluded = true;
           }
+
+          if (AccountingDocument !== ""){
+            oViewModel.setProperty("/buttons/nfe/enable", false);
+          }
+          
         }
       },
 
@@ -250,6 +258,8 @@ sap.ui.define(
         if (payload.NfeDocument === "0000000000") {
           payload.Action = "D";
         } else {
+          debugger;
+          oViewModel.setProperty("/buttons/nfe/enable", true);
           payload.Action = "H";
         }
         var oModel = this.getView().getModel();
@@ -379,6 +389,7 @@ sap.ui.define(
 
         this.getOwnerComponent().oListSelector.selectAListItem(sPath);
         var invoice = this.getView().getBindingContext().getObject();
+        this._laterDebtConcluded = false;
         this._ChangeButtonsStatus(invoice);
       },
 
@@ -436,6 +447,15 @@ sap.ui.define(
           oViewModel.setProperty("/buttons/accounting/enable", true);
           return;
         }
+
+        if (this._laterDebtConcluded === true ){
+          oViewModel.setProperty("/buttons/invoice/enable", false);
+          oViewModel.setProperty("/buttons/laterDebts/enable", true);
+          oViewModel.setProperty("/buttons/nfe/enable", true);
+          oViewModel.setProperty("/buttons/accounting/enable", false);
+          return;
+        };
+
         if (oData.VendorInvoice !== "") {
           oViewModel.setProperty("/buttons/invoice/enable", true);
           oViewModel.setProperty("/buttons/laterDebts/enable", true);
