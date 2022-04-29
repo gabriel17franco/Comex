@@ -129,7 +129,7 @@ sap.ui.define(
             }
           }
           var AccountingDocument = oEvent.getSource().getBindingContext().getProperty("AccountDocument");
-          debugger;
+          
           if (pendent === true && partial === true) {
             oViewModel.setProperty("/buttons/nfe/enable", false);
             oViewModel.setProperty("/buttons/invoice/enable", false);
@@ -258,7 +258,6 @@ sap.ui.define(
         if (payload.NfeDocument === "0000000000") {
           payload.Action = "D";
         } else {
-          debugger;
           oViewModel.setProperty("/buttons/nfe/enable", true);
           payload.Action = "H";
         }
@@ -269,7 +268,7 @@ sap.ui.define(
             oViewModel.setProperty("/busy", false);
           }.bind(this),
           error: function (oError) {
-            this._ChangeButtonsStatus(oData);
+            this.submitError(oError.responseText)
             oViewModel.setProperty("/busy", false);
           }.bind(this),
         });
@@ -427,7 +426,6 @@ sap.ui.define(
         // this.byId("ObjectPageLayoutHeaderTitle-flag").mProperties.src = "";
 
         this._refresh();
-        debugger;
 
         if (oData.AccountDocument !== "") {
           oAppModel.setProperty("/invoiceHighlight", "Success");

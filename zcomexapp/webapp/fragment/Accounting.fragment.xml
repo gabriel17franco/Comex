@@ -63,6 +63,7 @@
 						visible="{= ${AccountDocument} !== ''}"
 					/>
 				</f:content>
+			</f:SimpleForm>
 				<m:Button
 					width="auto"
 					icon="sap-icon://accept"
@@ -81,7 +82,6 @@
 					visible="{=${AccountDocument} !== '' }"
 					enabled="{detailView>/buttons/accounting/enable}"
 				/>
-			</f:SimpleForm>
 		</blocks>
 	</ObjectPageSubSection>
 	<ObjectPageSubSection title="{i18n>ledgerAccount}">

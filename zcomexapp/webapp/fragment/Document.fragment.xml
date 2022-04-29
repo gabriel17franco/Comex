@@ -63,8 +63,9 @@
 						visible="{= ${VendorInvoice} !== ''}"
 					/>
 				</f:content>
+			</f:SimpleForm>
 				<m:Button
-					width="auto"
+					width="150px"
 					icon="sap-icon://media-play"
 					text="{i18n>postInvoice}"
 					type="Accept"
@@ -81,7 +82,6 @@
 					press="onInvoicePost"
 					enabled="{detailView>/buttons/invoice/enable}"
 				/>
-			</f:SimpleForm>
 		</blocks>
 	</ObjectPageSubSection>
 	<ObjectPageSubSection title="{i18n>invoiceItems}">

@@ -1,7 +1,7 @@
 /*global history */
 sap.ui.define(
-  ["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History"],
-  function (Controller, History) {
+  ["sap/ui/core/mvc/Controller", "sap/ui/core/routing/History",     "sap/m/MessageBox",],
+  function (Controller, History, MessageBox) {
     "use strict";
 
     return Controller.extend("comex.zcomexapp.controller.BaseController", {
@@ -97,6 +97,41 @@ sap.ui.define(
         //   }
         // });
       },
+
+      submitError: function (responseBody) {
+        try {
+          var body = JSON.parse(responseBody);
+          var errorDetails = body.error.innererror.errordetails;
+          if (errorDetails) {
+            if (errorDetails.length > 0) {
+              for (i = 0; i < errorDetails.length; i++) {
+                MessageBox.error(errorDetails[i].message);
+              }
+            } else MessageBox.error(body.error.message.value);
+          } else MessageBox.error(body.error.message.value);
+        } catch (err) {
+          try {
+            //the error is in xml format. Technical error by framework
+            switch (typeof responseBody) {
+              case "string": // XML or simple text
+                if (responseBody.indexOf("<?xml") > -1) {
+                  var oXML = jQuery.parseXML(responseBody);
+                  var oXMLMsg = oXML.querySelector("message");
+                  if (oXMLMsg) MessageBox.error(oXMLMsg.textContent);
+                } else MessageBox.error(responseBody);
+
+                break;
+              case "object": // Exception
+                MessageBox.error(responseBody.toString());
+                break;
+            }
+          } catch (err) {
+            MessageBox.error("common error message");
+          }
+        }
+      },
+
+
     });
   }
 );

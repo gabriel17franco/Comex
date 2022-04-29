@@ -62,6 +62,7 @@
 						visible="{= ${NfeDocument} !== '0000000000'}"
 					/>
 				</f:content>
+			</f:SimpleForm>
 				<m:Button
 					width="auto"
 					icon="sap-icon://accept"
@@ -80,7 +81,6 @@
 					visible="{=${NfeDocument} !== '0000000000' }"
 					enabled="{detailView>/buttons/nfe/enable}"
 				/>
-			</f:SimpleForm>
 		</blocks>
 	</ObjectPageSubSection>
 </c:FragmentDefinition>
