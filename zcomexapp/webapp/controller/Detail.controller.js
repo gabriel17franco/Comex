@@ -66,6 +66,7 @@ sap.ui.define(
           new sap.ui.core.message.ControlMessageProcessor();
 
         this._oMessageManager = sap.ui.getCore().getMessageManager();
+        // this.getView().setModel(this._oMessageManager.getMessageModel(), "message");
 
         this._oMessageManager.registerMessageProcessor(oMessageProcessor);
 
@@ -129,7 +130,7 @@ sap.ui.define(
             }
           }
           var AccountingDocument = oEvent.getSource().getBindingContext().getProperty("AccountDocument");
-          
+
           if (pendent === true && partial === true) {
             oViewModel.setProperty("/buttons/nfe/enable", false);
             oViewModel.setProperty("/buttons/invoice/enable", false);
@@ -423,8 +424,9 @@ sap.ui.define(
         var oViewModel = this.getModel("detailView");
         var oAppModel = this.getModel("App");
 
+        var Invoice = this.getView().getBindingContext().getObject();
+        // this._onObjectMatched();
         // this.byId("ObjectPageLayoutHeaderTitle-flag").mProperties.src = "";
-
         this._refresh();
 
         if (oData.AccountDocument !== "") {

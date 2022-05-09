@@ -43,7 +43,8 @@
 							path: 'VendorInvoiceDate',
 							type: 'sap.ui.model.type.Date',
 							formatOptions: {
-								style: 'short'
+								style: 'medium',
+								UTC: true
 							}
 						}"
 						visible="{= ${VendorInvoice} !== ''}"
@@ -64,24 +65,24 @@
 					/>
 				</f:content>
 			</f:SimpleForm>
-				<m:Button
-					width="150px"
-					icon="sap-icon://media-play"
-					text="{i18n>postInvoice}"
-					type="Accept"
-					visible="{= ${VendorInvoice} === ''}"
-					press="onInvoicePost"
-					enabled="{detailView>/buttons/invoice/enable}"
-				/>
-				<m:Button
-					width="auto"
-					icon="sap-icon://media-reverse"
-					text="{i18n>reverse}"
-					type="Reject"
-					visible="{= ${VendorInvoice} !== ''}"
-					press="onInvoicePost"
-					enabled="{detailView>/buttons/invoice/enable}"
-				/>
+			<m:Button
+				width="150px"
+				icon="sap-icon://media-play"
+				text="{i18n>postInvoice}"
+				type="Accept"
+				visible="{= ${VendorInvoice} === ''}"
+				press="onInvoicePost"
+				enabled="{detailView>/buttons/invoice/enable}"
+			/>
+			<m:Button
+				width="auto"
+				icon="sap-icon://media-reverse"
+				text="{i18n>reverse}"
+				type="Reject"
+				visible="{= ${VendorInvoice} !== ''}"
+				press="onInvoicePost"
+				enabled="{detailView>/buttons/invoice/enable}"
+			/>
 		</blocks>
 	</ObjectPageSubSection>
 	<ObjectPageSubSection title="{i18n>invoiceItems}">

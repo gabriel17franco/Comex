@@ -308,30 +308,49 @@ sap.ui.define(
       onDeletePress(oEvent) {
         var oModel = this.getView().getModel();
         var SelectedContext = this._oList.getSelectedItem().getBindingContext();
+        var Invoice = SelectedContext.getProperty("Invoice");
         var VendorInvoice = SelectedContext.getProperty("VendorInvoice");
         var invoicePath = SelectedContext.getPath();
 
         if (VendorInvoice !== "") {
-          var msg = this.getResourceBundle().getText("deleteInvoiceMsg")
+          var msg = this.getResourceBundle().getText("deleteInvoiceMsg");
           MessageBox.error(msg);
           return;
         }
 
-        oModel.remove(invoicePath, {
-          success: function (oData, oResponse) {
-            var oSapMessage = JSON.parse(oResponse.headers["sap-message"]);
-            this.onRefresh();
+        var msgConfirm = this.getResourceBundle().getText(
+          "deleteInvoiceConfirm",
+          [Invoice]
+        );
 
-            if (oSapMessage.severity === "error") {
-              MessageBox.error(oSapMessage.message);
-            } else {
-              MessageBox.success(oSapMessage.message);
+        MessageBox.confirm(msgConfirm, {
+          icon: sap.m.MessageBox.Icon.INFORMATION,
+          actions: [
+            sap.m.MessageBox.Action.YES,
+            sap.m.MessageBox.Action.CANCEL,
+          ],
+          onClose: function (oAction) {
+            if (oAction == "YES") {
+              oModel.remove(invoicePath, {
+                success: function (oData, oResponse) {
+                  var oSapMessage = JSON.parse(
+                    oResponse.headers["sap-message"]
+                  );
+                  this.onRefresh();
+
+                  if (oSapMessage.severity === "error") {
+                    MessageBox.error(oSapMessage.message);
+                  } else {
+                    MessageBox.success(oSapMessage.message);
+                  }
+                }.bind(this),
+                error: function (oError) {
+                  var oSapMessage = JSON.parse(oError.responseText);
+                  var msg = oSapMessage.error.message.value;
+                  MessageBox.error(msg);
+                }.bind(this),
+              });
             }
-          }.bind(this),
-          error: function (oError) {
-            var oSapMessage = JSON.parse(oError.responseText);
-            var msg = oSapMessage.error.message.value;
-            MessageBox.error(msg);
           }.bind(this),
         });
       },
