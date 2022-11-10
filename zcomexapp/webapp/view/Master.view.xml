@@ -63,16 +63,23 @@
 				<items>
 					<ObjectListItem
 						type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}"
-						title="{Invoice}">
+						title="{Invoice}"
+						highlight="{
+							path: 'AccountDocument',
+							formatter: '.formatter.getInvoiceHighlight'
+						}">
+
 						<attributes>
 							<ObjectAttribute text="{VendorName}" />
 							<ObjectAttribute text="{
 												path: 'ReferenceDate',
 												type: 'sap.ui.model.type.Date',
 												formatOptions: {
-													style: 'short'
+													style: 'medium', 
+													UTC: true
 												}
 											}" />
+											
 						</attributes>
 						
 					</ObjectListItem>
@@ -121,13 +128,29 @@
 					text="{i18n>masterGroup1}"/>
 			</semantic:GroupSelect>
 		</semantic:group>
-				<semantic:addAction>
+		
+				<!-- <semantic:addAction>
 					<semantic:AddAction press="onAddPress"/>
-				</semantic:addAction>
+				</semantic:addAction> -->
 
-				<semantic:deleteAction>
-					<semantic:DeleteAction press="onDeletePress"/>
-				</semantic:deleteAction>
+				<semantic:customFooterContent>
+				<Button
+				tooltip="{i18n>addInvoice}"
+				icon="sap-icon://add-document"
+				press="onAddPress">
+				</Button>
+				<Button
+				tooltip="{i18n>deleteInvoice}"
+				icon="sap-icon://delete"
+				press="onDeletePress">
+				</Button>
+				<!-- <Button
+				tooltip="{i18n>templateDownload}"
+				icon="sap-icon://download"
+				press="onTemplateDownloadPress"
+				text="CSV">
+				</Button> -->
+				</semantic:customFooterContent>
 
 	</semantic:MasterPage>
 

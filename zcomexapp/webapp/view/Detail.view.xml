@@ -4,6 +4,7 @@
 	xmlns:semantic="sap.m.semantic"
 	xmlns="sap.uxap"
 	xmlns:core="sap.ui.core"
+	xmlns:m="sap.m"
 >
 	<semantic:DetailPage
 		id="page"
@@ -30,18 +31,16 @@
 						isObjectTitleAlwaysVisible="false"
 						showPlaceholder="true"
 					>
-						<!-- <actions>
-							<ObjectPageHeaderActionButton
-								icon="sap-icon://pull-down"
-								text="show section"
-								type="Emphasized"
+						<!-- showMarkers="true"
+						markFlagged="true" -->
+						<actions>
+							<m:Button
+								tooltip="{i18n>deleteInvoice}"
+								text="{i18n>csvDownload}"
+								icon="sap-icon://download"
+								press="onTemplateDownloadPress"
 							/>
-							<ObjectPageHeaderActionButton
-								icon="sap-icon://show"
-								text="show state"
-								type="Emphasized"
-							/>
-						</actions> -->
+						</actions>
 					</ObjectPageHeader>
 				</headerTitle>
 				<headerContent>
@@ -51,7 +50,8 @@
 					/>
 				</headerContent>
 				<sections>
-					<ObjectPageSection title="{i18n>vendorInvoice}">
+					<ObjectPageSection 
+						title="{i18n>vendorInvoice}">
 						<core:Fragment
 							fragmentName="comex.zcomexapp.fragment.Document"
 							type="XML"

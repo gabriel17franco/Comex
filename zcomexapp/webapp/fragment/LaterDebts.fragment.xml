@@ -97,8 +97,7 @@
 							path: 'LaterDebtDocument',
 							formatter: '.formatter.getLaterButtonIcon'
 						}"
-						width="100px"
-						visible="true"
+						width="auto"
 						enabled="{detailView>/buttons/laterDebts/enable}"
 						iconDensityAware="false"
 						press="onLaterDebtsPost"

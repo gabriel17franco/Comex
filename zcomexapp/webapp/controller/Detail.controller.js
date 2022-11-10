@@ -66,8 +66,14 @@ sap.ui.define(
           new sap.ui.core.message.ControlMessageProcessor();
 
         this._oMessageManager = sap.ui.getCore().getMessageManager();
+        // this.getView().setModel(this._oMessageManager.getMessageModel(), "message");
 
         this._oMessageManager.registerMessageProcessor(oMessageProcessor);
+
+        // var iconHeader = this.byId("ObjectPageLayoutHeaderTitle-flag");
+
+        // iconHeader.setTooltip("Status");
+        // iconHeader.mProperties.src = "";
 
         // this._oMessageManager.addMessages(
         //   new sap.ui.core.message.Message({
@@ -123,10 +129,12 @@ sap.ui.define(
               partial = true;
             }
           }
+          var AccountingDocument = oEvent.getSource().getBindingContext().getProperty("AccountDocument");
 
           if (pendent === true && partial === true) {
             oViewModel.setProperty("/buttons/nfe/enable", false);
             oViewModel.setProperty("/buttons/invoice/enable", false);
+            oViewModel.setProperty("/buttons/laterDebts/enable", true);
           }
 
           if (pendent === false) {
@@ -137,7 +145,13 @@ sap.ui.define(
           if (pendent === false && partial === true) {
             oViewModel.setProperty("/buttons/nfe/enable", true);
             oViewModel.setProperty("/buttons/invoice/enable", false);
+            this._laterDebtConcluded = true;
           }
+
+          if (AccountingDocument !== ""){
+            oViewModel.setProperty("/buttons/nfe/enable", false);
+          }
+          
         }
       },
 
@@ -193,7 +207,9 @@ sap.ui.define(
         var payload = oEvent.getSource().getBindingContext().getObject();
         var oModel = this.getView().getModel();
         oModel.create("/LaterDebtHeaderSet", payload, {
-          success: function (oData, oResponse) {}.bind(this),
+          success: function (oData, oResponse) {
+            this._refresh();
+          }.bind(this),
           error: function (oError) {}.bind(this),
         });
       },
@@ -243,8 +259,8 @@ sap.ui.define(
         if (payload.NfeDocument === "0000000000") {
           payload.Action = "D";
         } else {
-          oViewModel.setProperty("/busy", false);
-          return;
+          oViewModel.setProperty("/buttons/nfe/enable", true);
+          payload.Action = "H";
         }
         var oModel = this.getView().getModel();
         oModel.create("/InvoiceHeaderSet", payload, {
@@ -253,7 +269,7 @@ sap.ui.define(
             oViewModel.setProperty("/busy", false);
           }.bind(this),
           error: function (oError) {
-            this._ChangeButtonsStatus(oData);
+            this.submitError(oError.responseText)
             oViewModel.setProperty("/busy", false);
           }.bind(this),
         });
@@ -272,6 +288,8 @@ sap.ui.define(
         oModel.create("/InvoiceHeaderSet", payload, {
           success: function (oData, oResponse) {
             this._ChangeButtonsStatus(oData);
+            var SmartTableAccounting = this.byId("SmartTableAccounting");
+            SmartTableAccounting.rebindTable();
             oViewModel.setProperty("/busy", false);
           }.bind(this),
           error: function (oError) {
@@ -285,7 +303,6 @@ sap.ui.define(
         var that = this;
         var oTable = oEvent.getSource();
         oTable.getColumns().forEach(function (oColumn) {
-          // debugger;
           // oTable.autoResizeColumn(oColumn.getIndex());
         });
         // f (oColumn.sId.includes("Matnr") || oColumn.sId.includes("Aufnr")) {
@@ -372,6 +389,7 @@ sap.ui.define(
 
         this.getOwnerComponent().oListSelector.selectAListItem(sPath);
         var invoice = this.getView().getBindingContext().getObject();
+        this._laterDebtConcluded = false;
         this._ChangeButtonsStatus(invoice);
       },
 
@@ -404,13 +422,21 @@ sap.ui.define(
 
       _ChangeButtonsStatus: function (oData) {
         var oViewModel = this.getModel("detailView");
+        var oAppModel = this.getModel("App");
+
+        var Invoice = this.getView().getBindingContext().getObject();
+        // this._onObjectMatched();
+        // this.byId("ObjectPageLayoutHeaderTitle-flag").mProperties.src = "";
         this._refresh();
 
         if (oData.AccountDocument !== "") {
+          oAppModel.setProperty("/invoiceHighlight", "Success");
           oViewModel.setProperty("/buttons/invoice/enable", false);
           oViewModel.setProperty("/buttons/laterDebts/enable", false);
           oViewModel.setProperty("/buttons/nfe/enable", false);
           oViewModel.setProperty("/buttons/accounting/enable", true);
+          // this.byId("ObjectPageLayoutHeaderTitle-flag").mProperties.src =
+          //   "sap-icon://accept";
           return;
         }
 
@@ -421,6 +447,15 @@ sap.ui.define(
           oViewModel.setProperty("/buttons/accounting/enable", true);
           return;
         }
+
+        if (this._laterDebtConcluded === true ){
+          oViewModel.setProperty("/buttons/invoice/enable", false);
+          oViewModel.setProperty("/buttons/laterDebts/enable", true);
+          oViewModel.setProperty("/buttons/nfe/enable", true);
+          oViewModel.setProperty("/buttons/accounting/enable", false);
+          return;
+        };
+
         if (oData.VendorInvoice !== "") {
           oViewModel.setProperty("/buttons/invoice/enable", true);
           oViewModel.setProperty("/buttons/laterDebts/enable", true);
@@ -432,7 +467,6 @@ sap.ui.define(
           oViewModel.setProperty("/buttons/nfe/enable", false);
           oViewModel.setProperty("/buttons/accounting/enable", false);
         }
-        
 
         // oViewModel.setProperty();
       },
@@ -440,9 +474,6 @@ sap.ui.define(
       _refresh: function () {
         var SmartListHistory = this.byId("SmartListHistory");
         SmartListHistory.rebindList();
-
-        var SmartTableAccounting = this.byId("SmartTableAccounting");
-        SmartTableAccounting.rebindTable(); 
       },
     });
   }
